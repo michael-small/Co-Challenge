@@ -17,3 +17,9 @@ CoSchedule coding challenge to make a fullstack CRUD site
 * e2e: Google OAuth w/Passport.js
 * Misc:
   * Styling: Material UI + SCSS + styled-components
+
+### Docs
+
+See `~/Documentation` for some of my thinking and notes.
+
+Also, see [my Personal React Notes](https://github.com/michael-small/Personal-React-Notes/tree/main) repo where I journal helpful lessons and boilerplate for my various React projects.
