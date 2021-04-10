@@ -1,19 +1,24 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import GitHubIcon from '@material-ui/icons/GitHub';
+import '../_theme.scss';
 
 import './Cockpit.css';
 
 export default function Cockpit() {
 	return (
-		<div className='App'>
-			<Typography variant='h1'>CoChallenge</Typography>
+		<div>
+			<Typography variant='h1' className='center-text'>
+				CoChallenge
+			</Typography>
 			<div>
-				<p id='about'>
+				<p className='center-text'>
 					CoSchedule coding challenge to make a fullstack CRUD site{' '}
 					<GitHubIcon />
 				</p>
-				<Typography variant='h3'>Requirements:</Typography>
+				<Typography variant='h3' className='center-text'>
+					Requirements:
+				</Typography>
 				<ul>
 					<li>Pick a pre-approved API </li>
 					<li>
