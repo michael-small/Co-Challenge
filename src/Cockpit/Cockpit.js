@@ -3,7 +3,7 @@ import Typography from '@material-ui/core/Typography';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import '../_theme.scss';
 
-import './Cockpit.css';
+import './Cockpit.scss';
 
 export default function Cockpit() {
 	return (
