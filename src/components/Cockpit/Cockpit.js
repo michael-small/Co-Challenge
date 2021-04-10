@@ -1,7 +1,7 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import GitHubIcon from '@material-ui/icons/GitHub';
-import '../_theme.scss';
+import '../UI/_theme.scss';
 
 import './Cockpit.scss';
 
