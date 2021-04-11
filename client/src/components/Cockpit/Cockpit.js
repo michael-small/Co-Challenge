@@ -9,16 +9,18 @@ import '../UI/_theme.scss';
 import './Cockpit.scss';
 
 export default function Cockpit() {
-	const [helloWorld, setHelloWorld] = useState([]);
+	const [helloWorld, setHelloWorld] = useState();
 
 	useEffect(() => {
 		getHelloWorld();
 	}, []);
 
 	async function getHelloWorld() {
-		console.log(`${envs}/helloworld/`);
-		const helloWorldRes = await axios.get(`${envs}/helloworld`);
+		console.log('API env: ' + `${envs}/helloworld/`);
+		const helloWorldRes = await axios.get(`${envs}/helloworld/`);
+
 		setHelloWorld(helloWorldRes.data);
+		console.log('res data: ' + helloWorldRes.data);
 	}
 
 	return (
