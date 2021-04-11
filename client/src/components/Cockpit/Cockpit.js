@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
 import Typography from '@material-ui/core/Typography';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import '../UI/_theme.scss';
@@ -6,6 +8,14 @@ import '../UI/_theme.scss';
 import './Cockpit.scss';
 
 export default function Cockpit() {
+	useEffect(() => {
+		const getHelloWorld = async () => {
+			const res = await axios.get('http://localhost:5000/helloworld');
+			console.log(res.data);
+		};
+		getHelloWorld();
+	}, []);
+
 	return (
 		<div>
 			<Typography variant='h1' className='center-text'>

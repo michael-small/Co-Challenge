@@ -2,6 +2,12 @@ const express = require('express');
 
 const app = express();
 
+// bandaid fix for localhost CORS issues
+app.use((req, res, next) => {
+	res.header('Access-Control-Allow-Origin', '*');
+	next();
+});
+
 if (process.env.NODE_ENV === 'production') {
 	// Express will serve up production assets
 	app.use(express.static('client/build'));
@@ -14,8 +20,8 @@ if (process.env.NODE_ENV === 'production') {
 	});
 }
 
-app.get('/', (req, res) => {
-	res.send({ hello: 'world' });
+app.get('/helloworld', (req, res) => {
+	res.send('Hello World');
 });
 
 const PORT = process.env.PORT || 5000;
