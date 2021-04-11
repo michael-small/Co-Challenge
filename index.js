@@ -1,12 +1,18 @@
 const express = require('express');
-
 const app = express();
+app.use(express.json());
 
-// bandaid fix for localhost CORS issues
-app.use((req, res, next) => {
-	res.header('Access-Control-Allow-Origin', '*');
-	next();
-});
+// CORs for dev and prod
+const cors = require('cors');
+app.use(
+	cors({
+		origin: [
+			'http://localhost:3000',
+			'https://co-challenge.herokuapp.com/',
+		],
+		credentials: true,
+	})
+);
 
 if (process.env.NODE_ENV === 'production') {
 	// Express will serve up production assets

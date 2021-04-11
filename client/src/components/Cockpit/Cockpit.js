@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import envs from '../../envs/envs';
 
 import Typography from '@material-ui/core/Typography';
 import GitHubIcon from '@material-ui/icons/GitHub';
@@ -8,16 +9,21 @@ import '../UI/_theme.scss';
 import './Cockpit.scss';
 
 export default function Cockpit() {
+	const [helloWorld, setHelloWorld] = useState([]);
+
 	useEffect(() => {
-		const getHelloWorld = async () => {
-			const res = await axios.get('http://localhost:5000/helloworld');
-			console.log(res.data);
-		};
 		getHelloWorld();
 	}, []);
 
+	async function getHelloWorld() {
+		console.log(`${envs}/helloworld/`);
+		const helloWorldRes = await axios.get(`${envs}/helloworld`);
+		setHelloWorld(helloWorldRes.data);
+	}
+
 	return (
 		<div>
+			<div style={{ border: '1px solid red' }}>{helloWorld}</div>
 			<Typography variant='h1' className='center-text'>
 				CoChallenge
 			</Typography>
