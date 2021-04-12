@@ -18,6 +18,16 @@ CoSchedule coding challenge to make a fullstack CRUD site
 * Misc:
   * Styling: Material UI + SCSS + styled-components
 
+### How to Run Project
+
+From the project root:
+
+`npm run dev`
+
+That starts the client and server [concurrently](https://www.npmjs.com/package/concurrently). 
+Additionally, the server runs with [nodemon](https://www.npmjs.com/package/nodemon),so it can 
+update while running if a server file changes.
+
 ### Docs
 
 See `~/Documentation` for some of my thinking and notes.
