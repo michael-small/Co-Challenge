@@ -32,7 +32,7 @@ if (process.env.NODE_ENV === 'production') {
 	});
 }
 
-app.get('/myrepos', async (req, res) => {
+app.get('/api/my_repos', async (req, res) => {
 	const repos = await octokit.request('GET /users/michael-small/repos');
 	res.send(repos);
 });

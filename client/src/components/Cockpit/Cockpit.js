@@ -9,21 +9,22 @@ import '../UI/_theme.scss';
 import './Cockpit.scss';
 
 export default function Cockpit() {
-	const [myRepos, setMyRepos] = useState([]);
+	const [myRepos, setMyRepos] = useState({ data: [] });
 
 	useEffect(() => {
 		getMyRepos();
 	}, []);
 
 	async function getMyRepos() {
-		const myRepos = await axios.get(`${envs}/myrepos/`);
-		setMyRepos(myRepos.data);
+		const myReposRes = await axios.get(`${envs}/api/my_repos`);
+		setMyRepos(myReposRes.data);
+		console.log(myRepos);
 	}
 
 	return (
 		<div>
-			<Typography variant='h1' className='center-text'>
-				CoChallenge
+			<Typography variant='h2' className='center-text'>
+				Co-Challenge
 			</Typography>
 			<div>
 				<p className='center-text'>
@@ -43,6 +44,20 @@ export default function Cockpit() {
 						source, user can rate an item
 					</li>
 					<li>e2e auth as a bonus</li>
+				</ul>
+				<Typography variant='h4'>My Repos</Typography>
+				<ul>
+					{myRepos &&
+						myRepos.data.map((repo, index) => (
+							<li key={index}>
+								<div>
+									<a href={repo.html_url}>{repo.name}</a>
+									{repo.description && (
+										<p>{repo.description}</p>
+									)}
+								</div>
+							</li>
+						))}
 				</ul>
 			</div>
 		</div>
