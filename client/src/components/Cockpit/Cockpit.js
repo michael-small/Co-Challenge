@@ -2,11 +2,10 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import envs from '../../envs/envs';
 
+import './Cockpit.scss';
+import '../UI/_theme.scss';
 import Typography from '@material-ui/core/Typography';
 import GitHubIcon from '@material-ui/icons/GitHub';
-import '../UI/_theme.scss';
-
-import './Cockpit.scss';
 
 export default function Cockpit() {
 	const [myRepos, setMyRepos] = useState({ data: [] });
@@ -18,7 +17,6 @@ export default function Cockpit() {
 	async function getMyRepos() {
 		const myReposRes = await axios.get(`${envs}/api/my_repos`);
 		setMyRepos(myReposRes.data);
-		console.log(myRepos);
 	}
 
 	return (
