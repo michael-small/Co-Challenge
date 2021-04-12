@@ -32,10 +32,6 @@ if (process.env.NODE_ENV === 'production') {
 	});
 }
 
-app.get('/helloworld', (req, res) => {
-	res.send('Hello World');
-});
-
 app.get('/myrepos', async (req, res) => {
 	const repos = await octokit.request('GET /users/michael-small/repos');
 	console.log(repos);

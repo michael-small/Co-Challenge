@@ -9,20 +9,11 @@ import '../UI/_theme.scss';
 import './Cockpit.scss';
 
 export default function Cockpit() {
-	const [helloWorld, setHelloWorld] = useState();
 	const [myRepos, setMyRepos] = useState([]);
 
 	useEffect(() => {
-		getHelloWorld();
 		getMyRepos();
 	}, []);
-
-	async function getHelloWorld() {
-		const helloWorldRes = await axios.get(`${envs}/helloworld/`);
-		setHelloWorld(helloWorldRes.data);
-
-		console.log('res data: ' + helloWorldRes.data);
-	}
 
 	async function getMyRepos() {
 		const myRepos = await axios.get(`${envs}/myrepos/`);
@@ -31,7 +22,6 @@ export default function Cockpit() {
 
 	return (
 		<div>
-			<div style={{ border: '1px solid red' }}>{helloWorld}</div>
 			<Typography variant='h1' className='center-text'>
 				CoChallenge
 			</Typography>
