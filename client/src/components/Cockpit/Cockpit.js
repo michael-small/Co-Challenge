@@ -10,17 +10,23 @@ import './Cockpit.scss';
 
 export default function Cockpit() {
 	const [helloWorld, setHelloWorld] = useState();
+	const [myRepos, setMyRepos] = useState([]);
 
 	useEffect(() => {
 		getHelloWorld();
+		getMyRepos();
 	}, []);
 
 	async function getHelloWorld() {
-		console.log('API env: ' + `${envs}/helloworld/`);
 		const helloWorldRes = await axios.get(`${envs}/helloworld/`);
-
 		setHelloWorld(helloWorldRes.data);
+
 		console.log('res data: ' + helloWorldRes.data);
+	}
+
+	async function getMyRepos() {
+		const myRepos = await axios.get(`${envs}/myrepos/`);
+		setMyRepos(myRepos.data);
 	}
 
 	return (
