@@ -11,10 +11,10 @@ CoSchedule coding challenge to make a fullstack CRUD site
 
 ### Stack 
 
-* API: undecided at the moment
+* API: GitHub
 * Backend: Express + Mongoose
 * Frontend: create-react-app
-* e2e: Google OAuth w/Passport.js
+* e2e: Google or GitHub OAuth w/Passport.js
 * Misc:
   * Styling: Material UI + SCSS + styled-components
 
@@ -27,6 +27,14 @@ From the project root:
 That starts the client and server [concurrently](https://www.npmjs.com/package/concurrently). 
 Additionally, the server runs with [nodemon](https://www.npmjs.com/package/nodemon),so it can 
 update while running if a server file changes.
+
+### Making PR's
+
+PRs while in development should go into the `development` branch. `development` is an acceptable place 
+to rush in PRs that are not fully QA'd. I can't really review my own PRs, other than perhaps if I slept on them. 
+And though I am attempting to have a structured, methodical and professional approach to making this project, this 
+project is ultimately something I need to produce as quick as possible so I can return to my ongoing work on my 
+family's *already lucrative* [estate sale site](https://github.com/michael-small/Eds-Garage-Sale) and the [learning program demo](https://github.com/michael-small/Witty) that I am making for a family friend's business.
 
 ### Docs
 
