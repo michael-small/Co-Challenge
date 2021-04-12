@@ -9,10 +9,17 @@ import GitHubIcon from '@material-ui/icons/GitHub';
 
 export default function Cockpit() {
 	const [myRepos, setMyRepos] = useState({ data: [] });
+	const [ratings, setratings] = useState([]);
 
 	useEffect(() => {
 		getMyRepos();
+		getratings();
 	}, []);
+
+	async function getratings() {
+		const ratingsRes = await axios.get(`${envs}/ratings`);
+		setratings(ratingsRes.data);
+	}
 
 	async function getMyRepos() {
 		const myReposRes = await axios.get(`${envs}/api/my_repos`);
@@ -44,6 +51,13 @@ export default function Cockpit() {
 					<li>e2e auth as a bonus</li>
 				</ul>
 				<Typography variant='h4'>My Repos</Typography>
+				{ratings &&
+					ratings.map((rating, index) => (
+						<div style={{ border: '1px solid red' }}>
+							<p>User: {rating.user}</p>
+							<p>Rating: {rating.rating}</p>
+						</div>
+					))}
 				<ul>
 					{myRepos &&
 						myRepos.data.map((repo, index) => (
