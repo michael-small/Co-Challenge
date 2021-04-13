@@ -1,15 +1,14 @@
 import { Typography } from '@material-ui/core';
 import React from 'react';
 
+import Rating from './Rating/Rating';
+
 export default function Ratings() {
 	return (
 		<div>
 			<Typography variant='h4'>Ratings</Typography>
 			{/* TODO: Convert to `Create Rating` */}
-			<div>
-				<p>Rating 1</p>
-				<p>Rating 2</p>
-			</div>
+			<Rating />
 			{/* TODO: Convert to `Rating` */}
 			<div>
 				<form>
