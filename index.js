@@ -2,6 +2,10 @@ const express = require('express');
 const app = express();
 app.use(express.json());
 
+const keys = require('./config/keys');
+
+const mongoose = require('mongoose');
+
 const { Octokit } = require('@octokit/core');
 const octokit = new Octokit();
 
@@ -33,9 +37,27 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.get('/api/my_repos', async (req, res) => {
-	const repos = await octokit.request('GET /users/michael-small/repos');
-	res.send(repos);
+	try {
+		const repos = await octokit.request('GET /users/michael-small/repos');
+		res.send(repos);
+	} catch (error) {
+		res.status(500).send();
+	}
 });
+
+app.use('/ratings', require('./routes/ratingRouter'));
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT);
+
+mongoose.connect(
+	keys.mongoURI,
+	{
+		useNewUrlParser: true,
+		useUnifiedTopology: true,
+	},
+	(err) => {
+		if (err) return console.error(err);
+		console.log('Connected to MongoDB');
+	}
+);
