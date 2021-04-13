@@ -4,12 +4,29 @@ import envs from '../../envs/envs';
 
 import './Cockpit.scss';
 import '../UI/_theme.scss';
+import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import GitHubIcon from '@material-ui/icons/GitHub';
 
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+
+const useStyles = makeStyles((theme) => ({
+	root: {
+		'& > *': {
+			margin: theme.spacing(1),
+			width: '25ch',
+		},
+	},
+}));
+
 export default function Cockpit() {
+	const classes = useStyles();
 	const [myRepos, setMyRepos] = useState({ data: [] });
 	const [ratings, setratings] = useState([]);
+
+	const [reviewRating, setReviewRating] = useState('');
+	const [reviewerName, setReviewerName] = useState('');
 
 	useEffect(() => {
 		getMyRepos();
@@ -24,6 +41,22 @@ export default function Cockpit() {
 	async function getMyRepos() {
 		const myReposRes = await axios.get(`${envs}/api/my_repos`);
 		setMyRepos(myReposRes.data);
+	}
+
+	async function saveReview(event) {
+		event.preventDefault();
+
+		const reviewData = {
+			user: reviewerName,
+			rating: reviewRating,
+		};
+
+		console.log('Review posted');
+		try {
+			await axios.post(`${envs}/ratings`, reviewData);
+		} catch (error) {
+			console.log(error);
+		}
 	}
 
 	return (
@@ -51,9 +84,42 @@ export default function Cockpit() {
 					<li>e2e auth as a bonus</li>
 				</ul>
 				<Typography variant='h4'>My Repos</Typography>
+				<form
+					className={classes.root}
+					autoComplete='off'
+					onSubmit={saveReview}
+				>
+					<TextField
+						label='Name'
+						type='text'
+						value={reviewerName}
+						onChange={(e) => setReviewerName(e.target.value)}
+						error={reviewerName === '' ? true : false}
+						helperText='Name required'
+					/>
+					<TextField
+						label='Rating'
+						type='number'
+						value={reviewRating}
+						onChange={(e) => setReviewRating(e.target.value)}
+						error={reviewRating === '' ? true : false}
+						helperText='Rating required'
+					/>
+					<Button
+						variant='contained'
+						type='submit'
+						disabled={
+							reviewRating === '' || reviewerName === ''
+								? true
+								: false
+						}
+					>
+						Submit Rating
+					</Button>
+				</form>
 				{ratings &&
 					ratings.map((rating, index) => (
-						<div style={{ border: '1px solid red' }}>
+						<div style={{ border: '1px solid red' }} key={index}>
 							<p>User: {rating.user}</p>
 							<p>Rating: {rating.rating}</p>
 						</div>
