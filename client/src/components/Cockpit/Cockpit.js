@@ -4,38 +4,23 @@ import envs from '../../envs/envs';
 
 import './Cockpit.scss';
 import '../UI/_theme.scss';
-import { makeStyles } from '@material-ui/core/styles';
+
 import Typography from '@material-ui/core/Typography';
 import GitHubIcon from '@material-ui/icons/GitHub';
 
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-
 import Ratings from '../Ratings/Ratings';
 
-const useStyles = makeStyles((theme) => ({
-	root: {
-		'& > *': {
-			margin: theme.spacing(1),
-			width: '25ch',
-		},
-	},
-}));
-
 export default function Cockpit() {
-	const classes = useStyles();
 	const [myRepos, setMyRepos] = useState({ data: [] });
 	const [ratings, setRatings] = useState([]);
 
-	const [rating, setRating] = useState('');
-	const [reviewerName, setReviewerName] = useState('');
-
 	useEffect(() => {
 		getMyRepos();
-		getratings();
+		getRatings();
+		ratingCreated();
 	}, []);
 
-	async function getratings() {
+	async function getRatings() {
 		const ratingsRes = await axios.get(`${envs}/ratings`);
 		setRatings(ratingsRes.data);
 	}
@@ -45,20 +30,8 @@ export default function Cockpit() {
 		setMyRepos(myReposRes.data);
 	}
 
-	async function saveRating(event) {
-		event.preventDefault();
-
-		const ratingData = {
-			user: reviewerName,
-			rating: rating,
-		};
-
-		console.log('Rating posted');
-		try {
-			await axios.post(`${envs}/ratings`, ratingData);
-		} catch (error) {
-			console.log(error);
-		}
+	async function ratingCreated() {
+		getRatings();
 	}
 
 	return (
@@ -85,7 +58,7 @@ export default function Cockpit() {
 					</li>
 					<li>e2e auth as a bonus</li>
 				</ul>
-				<Ratings ratings={ratings} />
+				<Ratings ratings={ratings} cockpitCallback={ratingCreated} />
 				<Typography variant='h4'>My Repos</Typography>
 				<ul>
 					{myRepos &&

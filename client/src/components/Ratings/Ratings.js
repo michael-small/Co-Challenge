@@ -17,7 +17,7 @@ export default function Ratings(props) {
 					/>
 				))}
 			<Rating />
-			<CreateRating />
+			<CreateRating ratingCreated={props.cockpitCallback} />
 		</div>
 	);
 }

@@ -1,19 +1,48 @@
 import { Typography } from '@material-ui/core';
-import React from 'react';
+import React, { useState } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 
-export default function CreateRating() {
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+
+import axios from 'axios';
+import envs from '../../../envs/envs';
+
+const useStyles = makeStyles((theme) => ({
+	root: {
+		'& > *': {
+			margin: theme.spacing(1),
+			width: '25ch',
+		},
+	},
+}));
+
+export default function CreateRating(props) {
+	const classes = useStyles();
+	const [rating, setRating] = useState('');
+	const [reviewerName, setReviewerName] = useState('');
+
+	async function saveRating(event) {
+		event.preventDefault();
+
+		const ratingData = {
+			user: reviewerName,
+			rating: rating,
+		};
+
+		try {
+			await axios.post(`${envs}/ratings`, ratingData);
+		} catch (error) {
+			console.log(error);
+		}
+
+		props.ratingCreated();
+	}
+
 	return (
 		<div>
 			<Typography variant='h5'>Leave a Rating</Typography>
-			<div>
-				<form>
-					<input type='text' />
-					<input type='number' />
-				</form>
-				<button>Submit Rating</button>
-			</div>
-
-			{/* <form
+			<form
 				className={classes.root}
 				autoComplete='off'
 				onSubmit={saveRating}
@@ -43,7 +72,7 @@ export default function CreateRating() {
 				>
 					Submit Rating
 				</Button>
-			</form> */}
+			</form>
 		</div>
 	);
 }
