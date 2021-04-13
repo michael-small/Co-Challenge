@@ -14,10 +14,11 @@ export default function Ratings(props) {
 						user={rating.user}
 						rating={rating.rating}
 						key={index}
+						id={rating._id}
+						deleteRating={props.cockpitDeleteCallback}
 					/>
 				))}
-			<Rating />
-			<CreateRating ratingCreated={props.cockpitCallback} />
+			<CreateRating ratingCreated={props.cockpitCreateCallback} />
 		</div>
 	);
 }

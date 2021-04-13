@@ -34,6 +34,10 @@ export default function Cockpit() {
 		getRatings();
 	}
 
+	async function ratingDeleted() {
+		getRatings();
+	}
+
 	return (
 		<div>
 			<Typography variant='h2' className='center-text'>
@@ -58,7 +62,11 @@ export default function Cockpit() {
 					</li>
 					<li>e2e auth as a bonus</li>
 				</ul>
-				<Ratings ratings={ratings} cockpitCallback={ratingCreated} />
+				<Ratings
+					ratings={ratings}
+					cockpitCreateCallback={ratingCreated}
+					cockpitDeleteCallback={ratingDeleted}
+				/>
 				<Typography variant='h4'>My Repos</Typography>
 				<ul>
 					{myRepos &&
