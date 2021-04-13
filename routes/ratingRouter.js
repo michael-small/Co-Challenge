@@ -33,4 +33,18 @@ router.post('/', async (req, res) => {
 	}
 });
 
+router.delete('/:id', async (req, res) => {
+	try {
+		const requestedRatingId = req.params.id;
+
+		const savedRating = await Rating.findById(requestedRatingId);
+
+		await savedRating.delete();
+
+		res.json(savedRating);
+	} catch (error) {
+		res.status(500).send();
+	}
+});
+
 module.exports = router;

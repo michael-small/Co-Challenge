@@ -4,38 +4,25 @@ import envs from '../../envs/envs';
 
 import './Cockpit.scss';
 import '../UI/_theme.scss';
-import { makeStyles } from '@material-ui/core/styles';
+
 import Typography from '@material-ui/core/Typography';
 import GitHubIcon from '@material-ui/icons/GitHub';
 
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-
-const useStyles = makeStyles((theme) => ({
-	root: {
-		'& > *': {
-			margin: theme.spacing(1),
-			width: '25ch',
-		},
-	},
-}));
+import Ratings from '../Ratings/Ratings';
 
 export default function Cockpit() {
-	const classes = useStyles();
 	const [myRepos, setMyRepos] = useState({ data: [] });
-	const [ratings, setratings] = useState([]);
-
-	const [reviewRating, setReviewRating] = useState('');
-	const [reviewerName, setReviewerName] = useState('');
+	const [ratings, setRatings] = useState([]);
 
 	useEffect(() => {
 		getMyRepos();
-		getratings();
+		getRatings();
+		ratingCreated();
 	}, []);
 
-	async function getratings() {
+	async function getRatings() {
 		const ratingsRes = await axios.get(`${envs}/ratings`);
-		setratings(ratingsRes.data);
+		setRatings(ratingsRes.data);
 	}
 
 	async function getMyRepos() {
@@ -43,20 +30,12 @@ export default function Cockpit() {
 		setMyRepos(myReposRes.data);
 	}
 
-	async function saveReview(event) {
-		event.preventDefault();
+	async function ratingCreated() {
+		getRatings();
+	}
 
-		const reviewData = {
-			user: reviewerName,
-			rating: reviewRating,
-		};
-
-		console.log('Review posted');
-		try {
-			await axios.post(`${envs}/ratings`, reviewData);
-		} catch (error) {
-			console.log(error);
-		}
+	async function ratingDeleted() {
+		getRatings();
 	}
 
 	return (
@@ -83,47 +62,12 @@ export default function Cockpit() {
 					</li>
 					<li>e2e auth as a bonus</li>
 				</ul>
+				<Ratings
+					ratings={ratings}
+					cockpitCreateCallback={ratingCreated}
+					cockpitDeleteCallback={ratingDeleted}
+				/>
 				<Typography variant='h4'>My Repos</Typography>
-				<form
-					className={classes.root}
-					autoComplete='off'
-					onSubmit={saveReview}
-				>
-					<TextField
-						label='Name'
-						type='text'
-						value={reviewerName}
-						onChange={(e) => setReviewerName(e.target.value)}
-						error={reviewerName === '' ? true : false}
-						helperText='Name required'
-					/>
-					<TextField
-						label='Rating'
-						type='number'
-						value={reviewRating}
-						onChange={(e) => setReviewRating(e.target.value)}
-						error={reviewRating === '' ? true : false}
-						helperText='Rating required'
-					/>
-					<Button
-						variant='contained'
-						type='submit'
-						disabled={
-							reviewRating === '' || reviewerName === ''
-								? true
-								: false
-						}
-					>
-						Submit Rating
-					</Button>
-				</form>
-				{ratings &&
-					ratings.map((rating, index) => (
-						<div style={{ border: '1px solid red' }} key={index}>
-							<p>User: {rating.user}</p>
-							<p>Rating: {rating.rating}</p>
-						</div>
-					))}
 				<ul>
 					{myRepos &&
 						myRepos.data.map((repo, index) => (
