@@ -11,6 +11,8 @@ import GitHubIcon from '@material-ui/icons/GitHub';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
+import Reviews from '../Ratings/Ratings';
+
 const useStyles = makeStyles((theme) => ({
 	root: {
 		'& > *': {
@@ -83,47 +85,8 @@ export default function Cockpit() {
 					</li>
 					<li>e2e auth as a bonus</li>
 				</ul>
+				<Reviews />
 				<Typography variant='h4'>My Repos</Typography>
-				<form
-					className={classes.root}
-					autoComplete='off'
-					onSubmit={saveReview}
-				>
-					<TextField
-						label='Name'
-						type='text'
-						value={reviewerName}
-						onChange={(e) => setReviewerName(e.target.value)}
-						error={reviewerName === '' ? true : false}
-						helperText='Name required'
-					/>
-					<TextField
-						label='Rating'
-						type='number'
-						value={reviewRating}
-						onChange={(e) => setReviewRating(e.target.value)}
-						error={reviewRating === '' ? true : false}
-						helperText='Rating required'
-					/>
-					<Button
-						variant='contained'
-						type='submit'
-						disabled={
-							reviewRating === '' || reviewerName === ''
-								? true
-								: false
-						}
-					>
-						Submit Rating
-					</Button>
-				</form>
-				{ratings &&
-					ratings.map((rating, index) => (
-						<div style={{ border: '1px solid red' }} key={index}>
-							<p>User: {rating.user}</p>
-							<p>Rating: {rating.rating}</p>
-						</div>
-					))}
 				<ul>
 					{myRepos &&
 						myRepos.data.map((repo, index) => (
