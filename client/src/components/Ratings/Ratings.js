@@ -4,14 +4,18 @@ import CreateRating from './CreateRating/CreateRating';
 
 import Rating from './Rating/Rating';
 
-export default function Ratings() {
+export default function Ratings(props) {
 	return (
 		<div>
 			<Typography variant='h4'>Ratings</Typography>
-			{/* {ratings &&
-				ratings.map((rating, index) => (
-					<span></span>
-				))} */}
+			{props.ratings &&
+				props.ratings.map((rating, index) => (
+					<Rating
+						user={rating.user}
+						rating={rating.rating}
+						key={index}
+					/>
+				))}
 			<Rating />
 			<CreateRating />
 		</div>

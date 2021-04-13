@@ -85,7 +85,7 @@ export default function Cockpit() {
 					</li>
 					<li>e2e auth as a bonus</li>
 				</ul>
-				<Ratings />
+				<Ratings ratings={ratings} />
 				<Typography variant='h4'>My Repos</Typography>
 				<ul>
 					{myRepos &&

@@ -1,15 +1,13 @@
 import { Typography } from '@material-ui/core';
 import React from 'react';
 
-export default function Rating() {
+export default function Rating(props) {
 	return (
 		<div>
-			<Typography variant='body1'>User: </Typography>
-			<Typography variant='body1'>Rating: </Typography>
-			{/* <div style={{ border: '1px solid red' }} key={index}>
-				<p>User: {rating.user}</p>
-				<p>Rating: {rating.rating}</p>
-			</div> */}
+			<div style={{ margin: '2px' }}>
+				<Typography variant='body1'>User: {props.user}</Typography>
+				<Typography variant='body1'>Rating: {props.rating}</Typography>
+			</div>
 		</div>
 	);
 }
