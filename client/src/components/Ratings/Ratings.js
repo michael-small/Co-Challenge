@@ -1,5 +1,6 @@
 import { Typography } from '@material-ui/core';
 import React from 'react';
+import CreateRating from './CreateRating/CreateRating';
 
 import Rating from './Rating/Rating';
 
@@ -9,15 +10,7 @@ export default function Ratings() {
 			<Typography variant='h4'>Ratings</Typography>
 			{/* TODO: Convert to `Create Rating` */}
 			<Rating />
-			{/* TODO: Convert to `Rating` */}
-			<div>
-				<form>
-					<input type='text' />
-					<input type='number' />
-				</form>
-				<button>Submit Rating</button>
-			</div>
-
+			<CreateRating />
 			{/* <form
 					className={classes.root}
 					autoComplete='off'
