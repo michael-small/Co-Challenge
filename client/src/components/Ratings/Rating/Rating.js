@@ -6,6 +6,7 @@ import envs from '../../../envs/envs';
 
 import './Rating.scss';
 import Card from '@material-ui/core/Card';
+import MUIRating from '@material-ui/lab/Rating';
 
 export default function Rating(props) {
 	async function deleteRating() {
@@ -15,10 +16,12 @@ export default function Rating(props) {
 	return (
 		<Card style={{ height: '100%' }} className={'card'}>
 			<Typography variant='body1'>User: {props.user}</Typography>
-			<Typography variant='body1'>Rating: {props.rating}</Typography>
-			<Button onClick={deleteRating} variant='contained' size='small'>
-				x
-			</Button>
+			<MUIRating readOnly value={props.rating} />
+			<div>
+				<Button onClick={deleteRating} variant='contained' size='small'>
+					x
+				</Button>
+			</div>
 		</Card>
 	);
 }
