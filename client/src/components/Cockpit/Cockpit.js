@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import GitHubIcon from '@material-ui/icons/GitHub';
 
 import Ratings from '../Ratings/Ratings';
+import Repos from '../Repos/Repos';
 
 export default function Cockpit() {
 	const [myRepos, setMyRepos] = useState({ data: [] });
@@ -68,19 +69,7 @@ export default function Cockpit() {
 					cockpitDeleteCallback={ratingDeleted}
 				/>
 				<Typography variant='h4'>My Repos</Typography>
-				<ul>
-					{myRepos &&
-						myRepos.data.map((repo, index) => (
-							<li key={index}>
-								<div>
-									<a href={repo.html_url}>{repo.name}</a>
-									{repo.description && (
-										<p>{repo.description}</p>
-									)}
-								</div>
-							</li>
-						))}
-				</ul>
+				<Repos repos={myRepos.data} />
 			</div>
 		</div>
 	);
