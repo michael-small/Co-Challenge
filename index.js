@@ -38,10 +38,13 @@ if (process.env.NODE_ENV === 'production') {
 
 app.get('/api/my_repos', async (req, res) => {
 	try {
+		// 27 per query is a bit arbitrary but it allows for seeing
+		// my 3601 iter3 and DBs final project
 		const repos = await octokit.request(
-			'GET /users/michael-small/repos?per_page=30&sort=pushed'
+			'GET /users/michael-small/repos?per_page=27&sort=pushed'
 		);
 		res.send(repos);
+		console.log(repos);
 	} catch (error) {
 		res.status(500).send();
 	}
