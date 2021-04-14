@@ -1,9 +1,12 @@
 import React from 'react';
 
-export default function Repo() {
+export default function Repo(props) {
 	return (
-		<div>
-			<h5>Repo</h5>
-		</div>
+		<li>
+			<div>
+				<a href={props.repo.html_url}>{props.repo.name}</a>
+				{props.repo.description && <p>{props.repo.description}</p>}
+			</div>
+		</li>
 	);
 }

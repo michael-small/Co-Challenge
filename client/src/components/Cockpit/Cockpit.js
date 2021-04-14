@@ -69,20 +69,7 @@ export default function Cockpit() {
 					cockpitDeleteCallback={ratingDeleted}
 				/>
 				<Typography variant='h4'>My Repos</Typography>
-				<Repos />
-				<ul>
-					{myRepos &&
-						myRepos.data.map((repo, index) => (
-							<li key={index}>
-								<div>
-									<a href={repo.html_url}>{repo.name}</a>
-									{repo.description && (
-										<p>{repo.description}</p>
-									)}
-								</div>
-							</li>
-						))}
-				</ul>
+				<Repos repos={myRepos.data} />
 			</div>
 		</div>
 	);
