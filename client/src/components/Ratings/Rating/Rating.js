@@ -16,7 +16,9 @@ export default function Rating(props) {
 		<Card style={{ height: '100%' }} className={'card'}>
 			<Typography variant='body1'>User: {props.user}</Typography>
 			<Typography variant='body1'>Rating: {props.rating}</Typography>
-			<Button onClick={deleteRating}>x</Button>
+			<Button onClick={deleteRating} variant='contained' size='small'>
+				x
+			</Button>
 		</Card>
 	);
 }
