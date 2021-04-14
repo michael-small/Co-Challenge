@@ -38,7 +38,9 @@ if (process.env.NODE_ENV === 'production') {
 
 app.get('/api/my_repos', async (req, res) => {
 	try {
-		const repos = await octokit.request('GET /users/michael-small/repos');
+		const repos = await octokit.request(
+			'GET /users/michael-small/repos?per_page=30&sort=pushed'
+		);
 		res.send(repos);
 	} catch (error) {
 		res.status(500).send();
