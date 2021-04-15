@@ -21,7 +21,9 @@
   },
   "homepage": "https://github.com/michael-small/Co-Challenge#readme",
   "dependencies": {
+    "@octokit/auth-token": "^2.4.5",
     "@octokit/core": "^3.4.0",
+    "@octokit/rest": "^18.5.2",
     "concurrently": "^6.0.1",
     "cors": "^2.8.5",
     "express": "^4.17.1",

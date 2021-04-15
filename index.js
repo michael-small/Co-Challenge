@@ -6,8 +6,10 @@ const keys = require('./config/keys');
 
 const mongoose = require('mongoose');
 
-const { Octokit } = require('@octokit/core');
-const octokit = new Octokit();
+const { Octokit } = require('@octokit/rest');
+const octokit = new Octokit({
+	auth: `token ${keys.GH_Token}`,
+});
 
 // CORs for dev and prod
 const cors = require('cors');
@@ -44,7 +46,22 @@ app.get('/api/my_repos', async (req, res) => {
 			'GET /users/michael-small/repos?per_page=27&sort=pushed'
 		);
 		res.send(repos);
-		console.log(repos);
+	} catch (error) {
+		res.status(500).send();
+	}
+});
+
+app.get('/api/repo_commits', async (req, res) => {
+	const owner = 'michael-small',
+		repo = 'personal-site',
+		query = 'css';
+
+	try {
+		const commits = await octokit.search.commits({
+			q: `repo:${owner}/${repo}+${query}`,
+		});
+
+		res.send(commits.data.items);
 	} catch (error) {
 		res.status(500).send();
 	}
