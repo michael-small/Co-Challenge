@@ -15,9 +15,13 @@ export default function Cockpit() {
 	const [myRepos, setMyRepos] = useState({ data: [] });
 	const [ratings, setRatings] = useState([]);
 
+	const [myCommits, setMyCommits] = useState([]);
+
 	useEffect(() => {
 		getMyRepos();
+		getMyCommits();
 		getRatings();
+
 		ratingCreated();
 	}, []);
 
@@ -37,6 +41,11 @@ export default function Cockpit() {
 
 	async function ratingDeleted() {
 		getRatings();
+	}
+
+	async function getMyCommits() {
+		const myCommitsRes = await axios.get(`${envs}/api/repo_commits`);
+		setMyCommits(myCommitsRes.data);
 	}
 
 	return (
@@ -63,6 +72,16 @@ export default function Cockpit() {
 					</li>
 					<li>e2e auth as a bonus</li>
 				</ul>
+				<h4>Commits in my personal website repo looking for "css"</h4>
+				<ul>
+					{' '}
+					{myCommits.map((commit, index) => (
+						<li key={index}>
+							{commit.commit.message.split('\n')[0]}
+						</li>
+					))}
+				</ul>
+
 				<Ratings
 					ratings={ratings}
 					cockpitCreateCallback={ratingCreated}
