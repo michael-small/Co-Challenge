@@ -2,6 +2,17 @@ const express = require('express');
 const app = express();
 app.use(express.json());
 
+const passport = require('passport');
+const cookieSession = require('cookie-session');
+app.use(
+	cookieSession({
+		maxAge: 30 * 24 * 60 * 60 * 1000, //30 days in ms
+		keys: [keys.cookieKey],
+	})
+);
+app.use(passport.initialize());
+app.use(passport.session());
+
 const keys = require('./config/keys');
 
 const mongoose = require('mongoose');
