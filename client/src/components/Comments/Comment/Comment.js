@@ -8,10 +8,28 @@ import {
 	IconButton,
 	Typography,
 } from '@material-ui/core';
+import Popover from '@material-ui/core/Popover';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 export default function Comment(props) {
 	const [user, setUser] = [''];
+
+	const [anchorEl, setAnchorEl] = React.useState(null);
+
+	const handleClick = (event) => {
+		setAnchorEl(event.currentTarget);
+	};
+
+	const handleClose = () => {
+		setAnchorEl(null);
+	};
+
+	const open = Boolean(anchorEl);
+	const id = open ? 'simple-popover' : undefined;
+
 	const TEMP_DEV_COMMENT = 'This is a nice comment';
 	const TEMP_DEV_NAME = 'Michael Small';
 	const TEMP_DEV_PHOTO =
@@ -21,9 +39,33 @@ export default function Comment(props) {
 			<CardHeader
 				avatar={<Avatar alt={user} src={TEMP_DEV_PHOTO} />}
 				action={
-					<IconButton aria-label='edit comment'>
-						<MoreVertIcon />
-					</IconButton>
+					<div>
+						{' '}
+						<IconButton
+							aria-label='edit comment'
+							aria-describedby={id}
+							onClick={handleClick}
+						>
+							<MoreVertIcon />
+						</IconButton>
+						<Popover
+							id={id}
+							open={open}
+							anchorEl={anchorEl}
+							onClose={handleClose}
+							anchorOrigin={{
+								vertical: 'top',
+								horizontal: 'right',
+							}}
+							transformOrigin={{
+								vertical: 'top',
+								horizontal: 'right',
+							}}
+						>
+							<EditIcon /> Edit
+							<DeleteIcon /> Delete
+						</Popover>
+					</div>
 				}
 				title={TEMP_DEV_NAME}
 			/>
