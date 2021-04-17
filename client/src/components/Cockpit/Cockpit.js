@@ -60,11 +60,6 @@ export default function Cockpit() {
 			<Typography variant='h2' className='center-text'>
 				Co-Challenge
 			</Typography>
-			<Comments
-				comments={comments}
-				cockpitDeleteCallback={commentDeleted}
-				cockpitCreateCallback={commentCreated}
-			/>
 			<div>
 				<p className='center-text'>
 					CoSchedule coding challenge to make a fullstack CRUD site{' '}
@@ -88,6 +83,11 @@ export default function Cockpit() {
 					ratings={ratings}
 					cockpitCreateCallback={ratingCreated}
 					cockpitDeleteCallback={ratingDeleted}
+				/>
+				<Comments
+					comments={comments}
+					cockpitDeleteCallback={commentDeleted}
+					cockpitCreateCallback={commentCreated}
 				/>
 				<Typography variant='h4'>My Repos</Typography>
 				<Repos repos={myRepos.data} />

@@ -39,6 +39,7 @@ export default function Comment(props) {
 	async function deleteComment() {
 		await axios.delete(`${envs}/comments/${props.id}`);
 		props.deleteComment();
+		setAnchorEl(null);
 	}
 
 	const open = Boolean(anchorEl);
