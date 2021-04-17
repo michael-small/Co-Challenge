@@ -44,13 +44,13 @@ app.get('/api/my_repos', async (req, res) => {
 			'GET /users/michael-small/repos?per_page=27&sort=pushed'
 		);
 		res.send(repos);
-		console.log(repos);
 	} catch (error) {
 		res.status(500).send();
 	}
 });
 
 app.use('/ratings', require('./routes/ratingRouter'));
+app.use('/comments', require('./routes/commentRouter'));
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT);
