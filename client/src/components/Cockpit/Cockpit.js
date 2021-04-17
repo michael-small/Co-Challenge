@@ -15,16 +15,23 @@ import Comments from '../Comments/Comments';
 export default function Cockpit() {
 	const [myRepos, setMyRepos] = useState({ data: [] });
 	const [ratings, setRatings] = useState([]);
+	const [comments, setComments] = useState([]);
 
 	useEffect(() => {
 		getMyRepos();
 		getRatings();
+		getComments();
 		ratingCreated();
 	}, []);
 
 	async function getRatings() {
 		const ratingsRes = await axios.get(`${envs}/ratings`);
 		setRatings(ratingsRes.data);
+	}
+
+	async function getComments() {
+		const commentsRes = await axios.get(`${envs}/comments`);
+		setComments(commentsRes.data);
 	}
 
 	async function getMyRepos() {
@@ -40,12 +47,24 @@ export default function Cockpit() {
 		getRatings();
 	}
 
+	async function commentDeleted() {
+		getComments();
+	}
+
+	async function commentCreated() {
+		getComments();
+	}
+
 	return (
 		<div>
 			<Typography variant='h2' className='center-text'>
 				Co-Challenge
 			</Typography>
-			<Comments />
+			<Comments
+				comments={comments}
+				cockpitDeleteCallback={commentDeleted}
+				cockpitCreateCallback={commentCreated}
+			/>
 			<div>
 				<p className='center-text'>
 					CoSchedule coding challenge to make a fullstack CRUD site{' '}
