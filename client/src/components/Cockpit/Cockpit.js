@@ -10,6 +10,7 @@ import GitHubIcon from '@material-ui/icons/GitHub';
 
 import Ratings from '../Ratings/Ratings';
 import Repos from '../Repos/Repos';
+import Login from '../Login/Login';
 
 export default function Cockpit() {
 	const [myRepos, setMyRepos] = useState({ data: [] });
@@ -53,6 +54,7 @@ export default function Cockpit() {
 			<Typography variant='h2' className='center-text'>
 				Co-Challenge
 			</Typography>
+			<Login />
 			<div>
 				<p className='center-text'>
 					CoSchedule coding challenge to make a fullstack CRUD site{' '}
