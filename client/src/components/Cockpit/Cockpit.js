@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import envs from '../../envs/envs';
 
@@ -12,9 +12,12 @@ import Ratings from '../Ratings/Ratings';
 import Repos from '../Repos/Repos';
 import Login from '../Login/Login';
 
+import UserContext from '../../Context';
+
 export default function Cockpit() {
 	const [myRepos, setMyRepos] = useState({ data: [] });
 	const [ratings, setRatings] = useState([]);
+	const user = useContext(UserContext);
 
 	const [myCommits, setMyCommits] = useState([]);
 
@@ -54,12 +57,13 @@ export default function Cockpit() {
 			<Typography variant='h2' className='center-text'>
 				Co-Challenge
 			</Typography>
-			<Login />
+
 			<div>
 				<p className='center-text'>
 					CoSchedule coding challenge to make a fullstack CRUD site{' '}
 					<GitHubIcon />
 				</p>
+				<Login />
 				<Typography variant='h3' className='center-text'>
 					Requirements:
 				</Typography>
