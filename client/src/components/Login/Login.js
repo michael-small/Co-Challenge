@@ -4,12 +4,12 @@ import UserContext from '../../Context';
 import GoogleButton from 'react-google-button';
 import styled from 'styled-components';
 
-export default function Login() {
-	const GoogleButtonStyled = styled.div`
-		display: flex;
-		justify-content: center;
-	`;
+const GoogleButtonStyled = styled.div`
+	display: flex;
+	justify-content: center;
+`;
 
+export default function Login() {
 	const user = useContext(UserContext);
 	const login = () => {
 		window.open(`/auth/google`, '_self');
