@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import envs from '../../envs/envs';
 
@@ -11,14 +11,21 @@ import GitHubIcon from '@material-ui/icons/GitHub';
 import Ratings from '../Ratings/Ratings';
 import Repos from '../Repos/Repos';
 import Comments from '../Comments/Comments';
+import Login from '../Login/Login';
+
+import UserContext from '../../Context';
 
 export default function Cockpit() {
 	const [myRepos, setMyRepos] = useState({ data: [] });
 	const [ratings, setRatings] = useState([]);
+	const user = useContext(UserContext);
 	const [comments, setComments] = useState([]);
+
+	const [myCommits, setMyCommits] = useState([]);
 
 	useEffect(() => {
 		getMyRepos();
+		getMyCommits();
 		getRatings();
 		getComments();
 		ratingCreated();
@@ -55,16 +62,23 @@ export default function Cockpit() {
 		getComments();
 	}
 
+	async function getMyCommits() {
+		const myCommitsRes = await axios.get(`${envs}/api/repo_commits`);
+		setMyCommits(myCommitsRes.data);
+	}
+
 	return (
 		<div>
 			<Typography variant='h2' className='center-text'>
 				Co-Challenge
 			</Typography>
+
 			<div>
 				<p className='center-text'>
 					CoSchedule coding challenge to make a fullstack CRUD site{' '}
 					<GitHubIcon />
 				</p>
+				<Login />
 				<Typography variant='h3' className='center-text'>
 					Requirements:
 				</Typography>
@@ -79,6 +93,16 @@ export default function Cockpit() {
 					</li>
 					<li>e2e auth as a bonus</li>
 				</ul>
+				<h4>Commits in my personal website repo looking for "css"</h4>
+				<ul>
+					{' '}
+					{myCommits.map((commit, index) => (
+						<li key={index}>
+							{commit.commit.message.split('\n')[0]}
+						</li>
+					))}
+				</ul>
+
 				<Ratings
 					ratings={ratings}
 					cockpitCreateCallback={ratingCreated}
