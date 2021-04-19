@@ -1,4 +1,4 @@
-import { Button } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import React, { useContext, useState, useEffect } from 'react';
 import UserContext from '../../Context';
 import GoogleButton from 'react-google-button';
@@ -10,14 +10,26 @@ const GoogleButtonStyled = styled.div`
 `;
 
 export default function Login() {
-	// const user = useContext(UserContext);
+	const user = useContext(UserContext);
+	const [loggedIn, setLoggedIn] = useState(false);
 	const login = () => {
 		window.open(`/auth/google`, '_self');
+		setLoggedIn(true);
 	};
 
 	return (
-		<GoogleButtonStyled>
-			<GoogleButton onClick={login} />
-		</GoogleButtonStyled>
+		<span>
+			{!loggedIn && (
+				<GoogleButtonStyled>
+					<GoogleButton onClick={login} />
+				</GoogleButtonStyled>
+			)}
+
+			{user && (
+				<Typography variant='h4' style={{ textAlign: 'center' }}>
+					Welcome {user.name}
+				</Typography>
+			)}
+		</span>
 	);
 }
