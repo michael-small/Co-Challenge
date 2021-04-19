@@ -10,7 +10,7 @@ const GoogleButtonStyled = styled.div`
 `;
 
 export default function Login() {
-	const user = useContext(UserContext);
+	// const user = useContext(UserContext);
 	const login = () => {
 		window.open(`/auth/google`, '_self');
 	};
