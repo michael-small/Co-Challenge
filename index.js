@@ -1,13 +1,10 @@
 const express = require('express');
-const app = express();
-app.use(express.json());
-
+const mongoose = require('mongoose');
+const passport = require('passport');
 const keys = require('./config/keys');
 
-const mongoose = require('mongoose');
-
-const { Octokit } = require('@octokit/core');
-const octokit = new Octokit();
+const app = express();
+app.use(express.json());
 
 // CORs for dev and prod
 const cors = require('cors');
@@ -20,6 +17,42 @@ app.use(
 		credentials: true,
 	})
 );
+
+require('./models/userModel');
+require('./services/passport');
+
+const cookieSession = require('cookie-session');
+app.use(
+	cookieSession({
+		maxAge: 30 * 24 * 60 * 60 * 1000, //30 days in ms
+		keys: [keys.cookieKey],
+	})
+);
+
+mongoose.connect(
+	keys.mongoURI,
+	{
+		useNewUrlParser: true,
+		useUnifiedTopology: true,
+	},
+	(err) => {
+		if (err) return console.error(err);
+		console.log('Connected to MongoDB');
+	}
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+require('./routes/authRoutes')(app); 
+
+app.use('/ratings', require('./routes/ratingRouter'));
+
+const { Octokit } = require('@octokit/rest');
+const octokit = new Octokit({
+	auth: `token ${keys.GH_Token}`,
+});
+
+
 
 // Handles how React proxies with Express to point the output in the view to the
 // client's build. Neccisary for prod to recognize the `index.html` file to inject
@@ -44,25 +77,26 @@ app.get('/api/my_repos', async (req, res) => {
 			'GET /users/michael-small/repos?per_page=27&sort=pushed'
 		);
 		res.send(repos);
-		console.log(repos);
 	} catch (error) {
 		res.status(500).send();
 	}
 });
 
-app.use('/ratings', require('./routes/ratingRouter'));
+app.get('/api/repo_commits', async (req, res) => {
+	const owner = 'michael-small',
+		repo = 'personal-site',
+		query = 'css';
+
+	try {
+		const commits = await octokit.search.commits({
+			q: `repo:${owner}/${repo}+${query}`,
+		});
+
+		res.send(commits.data.items);
+	} catch (error) {
+		res.status(500).send();
+	}
+});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT);
-
-mongoose.connect(
-	keys.mongoURI,
-	{
-		useNewUrlParser: true,
-		useUnifiedTopology: true,
-	},
-	(err) => {
-		if (err) return console.error(err);
-		console.log('Connected to MongoDB');
-	}
-);
