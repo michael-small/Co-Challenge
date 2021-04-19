@@ -10,6 +10,7 @@ import GitHubIcon from '@material-ui/icons/GitHub';
 
 import Ratings from '../Ratings/Ratings';
 import Repos from '../Repos/Repos';
+import Comments from '../Comments/Comments';
 import Login from '../Login/Login';
 
 import UserContext from '../../Context';
@@ -18,6 +19,7 @@ export default function Cockpit() {
 	const [myRepos, setMyRepos] = useState({ data: [] });
 	const [ratings, setRatings] = useState([]);
 	const user = useContext(UserContext);
+	const [comments, setComments] = useState([]);
 
 	const [myCommits, setMyCommits] = useState([]);
 
@@ -25,13 +27,18 @@ export default function Cockpit() {
 		getMyRepos();
 		getMyCommits();
 		getRatings();
-
+		getComments();
 		ratingCreated();
 	}, []);
 
 	async function getRatings() {
 		const ratingsRes = await axios.get(`${envs}/ratings`);
 		setRatings(ratingsRes.data);
+	}
+
+	async function getComments() {
+		const commentsRes = await axios.get(`${envs}/comments`);
+		setComments(commentsRes.data);
 	}
 
 	async function getMyRepos() {
@@ -45,6 +52,14 @@ export default function Cockpit() {
 
 	async function ratingDeleted() {
 		getRatings();
+	}
+
+	async function commentDeleted() {
+		getComments();
+	}
+
+	async function commentCreated() {
+		getComments();
 	}
 
 	async function getMyCommits() {
@@ -92,6 +107,11 @@ export default function Cockpit() {
 					ratings={ratings}
 					cockpitCreateCallback={ratingCreated}
 					cockpitDeleteCallback={ratingDeleted}
+				/>
+				<Comments
+					comments={comments}
+					cockpitDeleteCallback={commentDeleted}
+					cockpitCreateCallback={commentCreated}
 				/>
 				<Typography variant='h4'>My Repos</Typography>
 				<Repos repos={myRepos.data} />

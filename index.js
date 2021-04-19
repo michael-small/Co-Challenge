@@ -82,6 +82,8 @@ app.get('/api/my_repos', async (req, res) => {
 	}
 });
 
+app.use('/ratings', require('./routes/ratingRouter'));
+app.use('/comments', require('./routes/commentRouter'));
 app.get('/api/repo_commits', async (req, res) => {
 	const owner = 'michael-small',
 		repo = 'personal-site',
