@@ -1,4 +1,4 @@
-# CoChallenge
+# CoChallenge: `createCommentsComponent` is the most up to date branch!
 
 CoSchedule coding challenge to make a fullstack CRUD site
 
