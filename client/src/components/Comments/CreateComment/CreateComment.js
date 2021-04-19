@@ -1,5 +1,5 @@
 import { Typography } from '@material-ui/core';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
 import TextField from '@material-ui/core/TextField';
@@ -7,6 +7,8 @@ import Button from '@material-ui/core/Button';
 
 import axios from 'axios';
 import envs from '../../../envs/envs';
+
+import UserContext from '../../../Context';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -19,14 +21,15 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CreateComment(props) {
 	const classes = useStyles();
+	const user = useContext(UserContext);
+
 	const [comment, setComment] = useState('');
-	const [commenterName, setCommenterName] = useState('');
 
 	async function saveComment(event) {
 		event.preventDefault();
 
 		const commentData = {
-			user: commenterName,
+			user: user.name,
 			comment: comment,
 		};
 
@@ -48,14 +51,6 @@ export default function CreateComment(props) {
 				onSubmit={saveComment}
 			>
 				<TextField
-					label='Name'
-					type='text'
-					value={commenterName}
-					onChange={(e) => setCommenterName(e.target.value)}
-					error={commenterName === '' ? true : false}
-					helperText='Name required'
-				/>
-				<TextField
 					label='Comment'
 					type='text'
 					value={comment}
@@ -66,9 +61,7 @@ export default function CreateComment(props) {
 				<Button
 					variant='contained'
 					type='submit'
-					disabled={
-						comment === '' || commenterName === '' ? true : false
-					}
+					disabled={comment === '' ? true : false}
 				>
 					Submit Comment
 				</Button>
