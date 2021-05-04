@@ -15,30 +15,13 @@ import Login from '../Login/Login';
 import UserContext from '../../Context';
 
 export default function Cockpit() {
-	const [ratings, setRatings] = useState([]);
 	const user = useContext(UserContext);
 
 	const [myCommits, setMyCommits] = useState([]);
 
 	useEffect(() => {
 		getMyCommits();
-		getRatings();
-
-		ratingCreated();
 	}, []);
-
-	async function getRatings() {
-		const ratingsRes = await axios.get(`${envs}/ratings`);
-		setRatings(ratingsRes.data);
-	}
-
-	async function ratingCreated() {
-		getRatings();
-	}
-
-	async function ratingDeleted() {
-		getRatings();
-	}
 
 	async function getMyCommits() {
 		const myCommitsRes = await axios.get(`${envs}/api/repo_commits`);
@@ -81,11 +64,7 @@ export default function Cockpit() {
 					))}
 				</ul>
 
-				<Ratings
-					ratings={ratings}
-					cockpitCreateCallback={ratingCreated}
-					cockpitDeleteCallback={ratingDeleted}
-				/>
+				<Ratings />
 				<Typography variant='h4'>My Repos</Typography>
 				<Repos />
 			</div>
