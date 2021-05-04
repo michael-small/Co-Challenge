@@ -30,7 +30,6 @@ export default function Ratings(props) {
 
 	useEffect(() => {
 		getRatings();
-		ratingCreated();
 	}, []);
 
 	async function getRatings() {
