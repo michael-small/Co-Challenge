@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import envs from '../../envs/envs';
+import axios from 'axios';
 import Repo from './Repo/Repo';
 
 import Grid from '@material-ui/core/Grid';
@@ -18,6 +20,17 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Repos(props) {
 	const classes = useStyles();
+	const [myRepos, setMyRepos] = useState({ data: [] });
+
+	useEffect(() => {
+		getMyRepos();
+	}, []);
+
+	async function getMyRepos() {
+		const myReposRes = await axios.get(`${envs}/api/my_repos`);
+		setMyRepos(myReposRes.data);
+	}
+
 	return (
 		<Grid
 			container
@@ -25,7 +38,7 @@ export default function Repos(props) {
 			className={clsx('grid-container', classes.root)}
 			style={{ marginBottom: '1rem' }}
 		>
-			{props.repos.map((repo, index) => (
+			{myRepos.data.map((repo, index) => (
 				<Grid
 					item
 					key={index}
