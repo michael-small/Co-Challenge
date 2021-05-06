@@ -4,7 +4,7 @@ import UserContext from '../../Context';
 import GoogleButton from 'react-google-button';
 import styled from 'styled-components';
 
-const GoogleButtonStyled = styled.div`
+const StyledButton = styled.div`
 	display: flex;
 	justify-content: center;
 `;
@@ -19,16 +19,23 @@ export default function Login() {
 
 	return (
 		<span>
-			{!loggedIn && (
-				<GoogleButtonStyled>
+			{!user && (
+				<StyledButton>
 					<GoogleButton onClick={login} />
-				</GoogleButtonStyled>
+				</StyledButton>
 			)}
 
 			{user && (
-				<Typography variant='h4' style={{ textAlign: 'center' }}>
-					Welcome {user.name}
-				</Typography>
+				<div>
+					<Typography variant='h4' style={{ textAlign: 'center' }}>
+						Welcome {user.name}
+					</Typography>
+					<StyledButton>
+						<Button href='/api/logout' variant='outlined'>
+							Logout
+						</Button>
+					</StyledButton>
+				</div>
 			)}
 		</span>
 	);

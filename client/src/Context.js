@@ -12,14 +12,18 @@ function UserContextProvider(props) {
 	}, []);
 
 	async function getUser() {
-		const res = await axios.get(`${envs}/api/current_user`, {withCredentials: true});
-		console.log("getUser() res.data: " + JSON.stringify(res.data));
+		const res = await axios.get(`${envs}/api/current_user`, {
+			withCredentials: true,
+		});
+		console.log('getUser() res.data: ' + JSON.stringify(res.data));
 		setUser(res.data);
-		console.log("user: " + JSON.stringify(user));
+		console.log('user: ' + JSON.stringify(user));
 	}
 
 	return (
-		<UserContext.Provider value={user}>{props.children}</UserContext.Provider>
+		<UserContext.Provider value={user}>
+			{props.children}
+		</UserContext.Provider>
 	);
 }
 
