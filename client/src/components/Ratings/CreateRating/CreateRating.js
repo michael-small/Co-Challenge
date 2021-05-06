@@ -31,7 +31,9 @@ export default function CreateRating(props) {
 		};
 
 		try {
-			await axios.post(`${envs}/ratings`, ratingData);
+			await axios.post(`${envs}/ratings`, ratingData, {
+				withCredentials: true,
+			});
 		} catch (error) {
 			console.log(error);
 		}
