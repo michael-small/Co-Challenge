@@ -10,7 +10,9 @@ import MUIRating from '@material-ui/lab/Rating';
 
 export default function Rating(props) {
 	async function deleteRating() {
-		await axios.delete(`${envs}/ratings/${props.id}`);
+		await axios.delete(`${envs}/ratings/${props.id}`, {
+			withCredentials: true,
+		});
 		props.deleteRating();
 	}
 	return (

@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const Rating = require('../models/ratingModel');
+const requireLogin = require('../middlewares/requireLogin');
 
 router.get('/', async (req, res) => {
 	try {
@@ -10,7 +11,7 @@ router.get('/', async (req, res) => {
 	}
 });
 
-router.post('/', async (req, res) => {
+router.post('/', requireLogin, async (req, res) => {
 	try {
 		const { user, rating } = req.body;
 
@@ -33,7 +34,7 @@ router.post('/', async (req, res) => {
 	}
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', requireLogin, async (req, res) => {
 	try {
 		const requestedRatingId = req.params.id;
 
